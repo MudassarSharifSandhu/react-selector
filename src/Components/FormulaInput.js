@@ -3,7 +3,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { autocompletion } from "@codemirror/autocomplete";
 
-const dummyVariables = {
+const fields = {
   "Actual New MRR": 1000,
   "New Customers": 10,
   "Monthly ACV": 100,
@@ -36,7 +36,7 @@ const FormulaInput = () => {
       const variableMapping = {};
       let safeFormula = formula;
 
-      for (const [key, value] of Object.entries(dummyVariables)) {
+      for (const [key, value] of Object.entries(fields)) {
         const safeName = generateSafeVariableName(key);
         safeFormula = safeFormula.replace(new RegExp(key, "g"), safeName);
         variableMapping[safeName] = value;
@@ -66,6 +66,16 @@ const FormulaInput = () => {
       />
       <div>
         <strong>Evaluated Result:</strong> {evaluateFormula(formula)}
+      </div>
+      <div className="selector-fields">
+        <h3>Test select fields:</h3>
+        <ul>
+          {Object.entries(fields).map(([key, value]) => (
+            <li key={key}>
+              <strong>{key}:</strong> {value}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
